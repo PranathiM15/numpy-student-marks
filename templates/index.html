@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Markwise — NumPy Student Analytics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+  <header class="topbar">
+    <a class="brand" href="/"><span class="brand-mark">m.</span><span>MARKWISE<small>NUMPY LAB / 011</small></span></a>
+    <div class="top-meta"><span class="live-dot"></span> ANALYTICS READY <span class="divider">/</span> PYTHON + NUMPY</div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span>FIELD NOTE 11</span><span class="eyebrow-line"></span><span>STUDENT PERFORMANCE</span></div>
+        <h1>Marks, made<br><em>meaningful.</em></h1>
+        <p>Turn a simple list of scores into a clear statistical snapshot. Powered by NumPy's fast numerical operations.</p>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="orb-core">μ</div><span class="float-tag tag-a">mean()</span><span class="float-tag tag-b">std()</span><span class="float-tag tag-c">median()</span>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <div class="input-panel panel">
+        <div class="panel-heading"><div><span class="section-index">01</span><h2>Input dataset</h2></div><span class="tiny-label">RANGE 0—100</span></div>
+        <p class="muted">Add marks separated by commas. You can also paste a new line of scores.</p>
+        <form method="post">
+          <label for="marks">STUDENT MARKS</label>
+          <textarea id="marks" name="marks" spellcheck="false" required>{{ raw }}</textarea>
+          {% if error %}<div class="error"><strong>Check your input:</strong> {{ error }}</div>{% endif %}
+          <div class="form-foot"><span class="mono">EXAMPLE: 78, 85, 92, 67</span><button type="submit">Analyze marks <span>↗</span></button></div>
+        </form>
+        <div class="method-note"><span class="note-icon">⌘</span><span><strong>Vectorized calculation</strong><br>Statistics are calculated with NumPy, not manual loops.</span></div>
+      </div>
+
+      <div class="results-panel">
+        {% if result %}
+        <div class="results-head"><div><span class="section-index">02</span><h2>Statistical snapshot</h2></div><span class="count-pill">{{ result.count }} SCORES</span></div>
+        <div class="metrics-grid">
+          <article class="metric metric-feature"><div class="metric-top"><span>MEAN</span><span class="metric-symbol">μ</span></div><div class="metric-value">{{ "%.2f"|format(result.mean) }}</div><p>Average score across the dataset.</p><div class="metric-track"><span style="width: {{ [result.mean, 100]|min }}%"></span></div></article>
+          <article class="metric"><div class="metric-top"><span>MEDIAN</span><span class="metric-symbol">M</span></div><div class="metric-value">{{ "%.2f"|format(result.median) }}</div><p>Middle value after sorting.</p></article>
+          <article class="metric"><div class="metric-top"><span>MAXIMUM</span><span class="metric-symbol">↑</span></div><div class="metric-value">{{ "%.2f"|format(result.maximum) }}</div><p>Highest mark recorded.</p></article>
+          <article class="metric"><div class="metric-top"><span>MINIMUM</span><span class="metric-symbol">↓</span></div><div class="metric-value">{{ "%.2f"|format(result.minimum) }}</div><p>Lowest mark recorded.</p></article>
+          <article class="metric metric-wide"><div class="metric-top"><span>STANDARD DEVIATION</span><span class="metric-symbol">σ</span></div><div class="metric-value">{{ "%.2f"|format(result.std) }}</div><p>Population standard deviation — a measure of how spread out the marks are.</p></article>
+          <article class="metric metric-wide range-card"><div class="metric-top"><span>SCORE RANGE</span><span class="metric-symbol">↔</span></div><div class="range-line"><span>{{ "%.2f"|format(result.minimum) }}</span><div class="range-bar"><span style="left: {{ result.minimum }}%; width: {{ result.spread }}%"></span></div><span>{{ "%.2f"|format(result.maximum) }}</span></div><p>Difference between the highest and lowest score: <strong>{{ "%.2f"|format(result.spread) }}</strong></p></article>
+        </div>
+        <div class="interpretation"><span class="interpret-icon">✳</span><div><strong>Quick interpretation</strong><p>The average is <b>{{ "%.2f"|format(result.mean) }}</b>. The scores vary by <b>{{ "%.2f"|format(result.std) }}</b> points around the mean (population standard deviation). A lower standard deviation generally means scores are more closely grouped.</p></div></div>
+        <div class="data-strip"><span>ARRAY CONTENTS</span><div>{% for mark in result.marks %}<span class="score-chip">{{ mark }}</span>{% endfor %}</div></div>
+        {% else %}
+        <div class="empty-state"><span class="empty-icon">∑</span><h2>Your results will appear here</h2><p>Enter valid marks from 0 to 100, then select <b>Analyze marks</b>.</p></div>
+        {% endif %}
+      </div>
+    </section>
+
+    <section class="formula-panel panel">
+      <div class="formula-title"><span class="section-index">03</span><div><h2>Under the hood</h2><p class="muted">Five NumPy functions. One useful summary.</p></div></div>
+      <div class="formula-grid">
+        <div><code>np.mean(marks)</code><span>Arithmetic average</span></div><div><code>np.median(marks)</code><span>Central score</span></div><div><code>np.max(marks)</code><span>Largest value</span></div><div><code>np.min(marks)</code><span>Smallest value</span></div><div><code>np.std(marks)</code><span>Population spread</span></div>
+      </div>
+    </section>
+    <footer><span>MARKWISE <b>·</b> TASK 11</span><span>BUILT WITH PYTHON & NUMPY</span><span>LEARN BY MEASURING.</span></footer>
+  </main>
+</body>
+</html>

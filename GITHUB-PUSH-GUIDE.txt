@@ -1,0 +1,47 @@
+GITHUB PUSH GUIDE — TASK 11
+
+Repository creation page:
+https://github.com/new
+
+1. Sign in to GitHub.
+2. Repository name: numpy-student-marks
+3. Choose Public.
+4. Leave “Add a README”, “Add .gitignore”, and “Choose a license” unchecked.
+5. Click Create repository.
+6. Extract this ZIP. Open the extracted numpy-student-marks folder in File Explorer.
+7. In that folder, click the address bar, type cmd, and press Enter.
+8. Run these commands one by one:
+
+git --version
+
+If Git is not installed, install it from https://git-scm.com/downloads, then close and reopen the terminal.
+
+git init
+git add .
+git commit -m "Build NumPy student marks analytics app"
+git branch -M main
+git remote add origin https://github.com/YOUR-GITHUB-USERNAME/numpy-student-marks.git
+git push -u origin main
+
+IMPORTANT: Replace YOUR-GITHUB-USERNAME with your actual GitHub username. Do not type the placeholder literally.
+If Git asks you to sign in, complete the browser sign-in prompt.
+
+VERIFY:
+Refresh https://github.com/YOUR-GITHUB-USERNAME/numpy-student-marks and check that app.py, templates, static, requirements.txt and README.md appear.
+
+If you see “remote origin already exists”:
+git remote set-url origin https://github.com/YOUR-GITHUB-USERNAME/numpy-student-marks.git
+git push -u origin main
+
+If Git says “nothing to commit”, continue with the branch/remote/push commands.
+If Git asks who you are, set these once using your own details:
+git config --global user.name "Your Name"
+git config --global user.email "YOUR-GITHUB-EMAIL"
+Then retry git commit and push.
+
+LOCAL RUN (Windows):
+py -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+python app.py
+Then open http://127.0.0.1:5000
